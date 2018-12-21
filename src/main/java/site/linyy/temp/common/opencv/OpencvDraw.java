@@ -70,7 +70,7 @@ public class OpencvDraw{
         setEdgeList(edgeList);//多边形边数集合
 //        IntPoint[][] basePoints = new IntPoint[(int) (size.height/step)][(int)(size.width/step)]; //有序
 //        setBasePoints(basePoints,(int)(size.height/step),(int)(size.width/step),step);
-        List<IntPoint> basePoints = new ArrayList<>();
+        List<IntPointBean> basePoints = new ArrayList<>();
         setBasePointsList(basePoints,(int)(size.height/step),(int)(size.width/step),step);
        while(basePoints.size()>0) {
     	   drawRandom(image,basePoints,rgbList,edgeList,step); //随机点，随机颜色，随机多边形，删除画完的点
@@ -86,11 +86,11 @@ public class OpencvDraw{
 	/**
 	 * 随机点，随机颜色，随机多边形
 	 */
-	private static void drawRandom(Mat image,List<IntPoint> basePoints, List<RgbRange> rgbList, List<Integer> edgeList,int step) {
+	private static void drawRandom(Mat image,List<IntPointBean> basePoints, List<RgbRange> rgbList, List<Integer> edgeList,int step) {
 		
 		int size = basePoints.size();
 		int random  = (int)Math.random()*size;
-		IntPoint point = basePoints.get(random);
+		IntPointBean point = basePoints.get(random);
 		basePoints.remove(random);
 		int drawRange = 3; //在n倍step内画多边形
 		List<Point> pointList = new ArrayList<>();
@@ -113,7 +113,7 @@ public class OpencvDraw{
 	/**
 	 * 随机生成多边形顶点
 	 */
-	private static void randomPointList(IntPoint point,int range,List<Point> pointList, List<Integer> edgeList) {
+	private static void randomPointList(IntPointBean point,int range,List<Point> pointList, List<Integer> edgeList) {
 
 		//生成point点周围的顶点(上下左右平移最大距离：range）
 		int edgeNum  = randomEdgeNum(edgeList);
@@ -137,11 +137,11 @@ public class OpencvDraw{
 	/**
 	 * 设置基础点
 	 */
-	private static void setBasePointsList(List<IntPoint> basePoints, int x, int y, int step) {
+	private static void setBasePointsList(List<IntPointBean> basePoints, int x, int y, int step) {
 
 		for(int i=0;i<x;i++) {
 			for(int j=0;j<y;j++) {
-				basePoints.add( new IntPoint(j*step,i*step));
+				basePoints.add( new IntPointBean(j*step,i*step));
 			}
 		}
 	}
@@ -151,11 +151,11 @@ public class OpencvDraw{
 	 * @param x 行数
 	 * @param y 列数
 	 */
-	private static void setBasePoints(IntPoint[][] basePoints,int x,int y,int step) {
+	private static void setBasePoints(IntPointBean[][] basePoints,int x,int y,int step) {
 		
 		for(int i=0;i<x;i++) {
 			for(int j=0;j<y;j++) {
-				basePoints[i][j] = new IntPoint(i*step,j*step);
+				basePoints[i][j] = new IntPointBean(i*step,j*step);
 			}
 		}
 	}
